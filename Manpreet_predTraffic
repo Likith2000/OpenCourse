@@ -1,0 +1,24 @@
+import numpy as np
+import pandas as pd
+data=pd.read_csv("traffic.csv")
+x=data.iloc[:,:-1].values
+y=data.iloc[:,-1:].values
+
+
+from sklearn.linear_model import LinearRegression
+LR=LinearRegression()
+from sklearn.preprocessing import PolynomialFeatures
+print("Enter The Degree, Note that higher the degree => Higher Accuracy\n")
+w=int(input())
+poly=PolynomialFeatures(degree=w)
+
+x_poly=poly.fit_transform(x)
+LR.fit(x_poly,y)
+
+z=int(input("Enter The time\n"))
+time=np.matrix([z])
+
+l=poly.fit_transform(time)
+traffic_pred=LR.predict(l)
+
+print("The Predicted traffic at time ",z, " is",traffic_pred)
